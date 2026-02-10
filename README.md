@@ -51,14 +51,14 @@ The application follows a linear user journey consisting of four primary screens
   - Provides a **Submit** button to confirm the selected answer.
   - Includes a **Next** button that changes the question. Otherwise, it remains inactive until submission.
 
-![Quiz Screen](Quiz_Screen_Question.png)
+![Quiz Screen](Design_Screens/Quiz_Screen_Question.png)
 
 **Answer / Feedback**
 
 - Provides immediate visual feedback indicating whether the selected answer is correct or incorrect.
 - Ensures feedback is shown before users can continue, reinforcing learning outcomes.
 
-![Answer/Feedback](Quiz_Screen_Answer.png)
+![Answer/Feedback](Design_Screens/Quiz_Screen_Answer.png)
 
 
 - **Results Screen**
