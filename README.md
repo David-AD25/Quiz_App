@@ -137,11 +137,10 @@ The application follows a linear user journey consisting of four primary screens
   
   
 - **Accessibility**
-
-- The user interface must use a minimum font size of **12pt** for readability.
-- Buttons and radio buttons must have a minimum interactive size of **32×32 pixels**.
-- Text and background colour contrast must be at least **3:1**.
-- All error or validation messages must be clearly displayed for a minimum of **3 seconds** before navigating away.
+  - The user interface must use a minimum font size of **12pt** for readability.
+  - Buttons and radio buttons must have a minimum interactive size of **32×32 pixels**.
+  - Text and background colour contrast must be at least **3:1**.
+  - All error or validation messages must be clearly displayed for a minimum of **3 seconds** before navigating away.
 
 - **Reliability**
   - The system must not lose quiz results during a normal session; stored results must persist across restarts.
@@ -206,7 +205,7 @@ The application follows a linear user journey consisting of four primary screens
   - Runs automated tests on every commit or pull request.
   - Helps maintain code quality and ensures new updates do not break existing functionality.
 
-- **Class Diagram**
+### Class Diagram
   - Below is the class diagram : 
 
   ![Class Diagram](Images/Class_Diagram.png)
