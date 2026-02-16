@@ -42,8 +42,7 @@ The application follows a linear user journey consisting of four primary screens
   - Displays application title and welcome message.
   - Provides users with options to start the quiz by entering a username and submitting, or to exit the application via the exit button.
 
-![Welcome Screen](Design_Screens/Welcome_Screen.png)
-
+![Welcome Screen](Images/Design_Screens/Welcome_Screen.png)
 
 
 - **Quiz Screen**
@@ -54,14 +53,14 @@ The application follows a linear user journey consisting of four primary screens
   - Provides a **Submit** button to confirm the selected answer.
   - Includes a **Next** button that changes the question. Otherwise, it remains inactive until submission.
 
-![Quiz Screen](Design_Screens/Quiz_Screen_Question.png)
+![Quiz Screen](Images/Design_Screens/Quiz_Screen_Question.png)
 
 **Answer / Feedback**
 
 - Provides immediate visual feedback indicating whether the selected answer is correct or incorrect.
 - Ensures feedback is shown before users can continue, reinforcing learning outcomes.
 
-![Answer/Feedback](Design_Screens/Quiz_Screen_Answer.png)
+![Answer/Feedback](Images/Design_Screens/Quiz_Screen_Answer.png)
 
 
 - **Results Screen**
@@ -76,7 +75,7 @@ The application follows a linear user journey consisting of four primary screens
     - Ensures results are presented in a clear and readable format.
     - Includes a button to access stored quiz results or to exit the application.
 
-    ![Current Result](Design_Screens/Results_Screen.png)
+    ![Current Result](Images/Design_Screens/Results_Screen.png)
 
   - **Stored Results View**
     - Displays when the user selects the **Results_File** button.
@@ -84,7 +83,7 @@ The application follows a linear user journey consisting of four primary screens
     - Shows historical data such as user names, scores, completion dates and times.
     - Allows users or administrators to review past quiz attempts.
 
-    ![Stored Results ](Design_Screens/Stored_Results.png)
+    ![Stored Results ](Images/Design_Screens/Stored_Results.png)
 
 
 
@@ -127,7 +126,7 @@ The application follows a linear user journey consisting of four primary screens
 
 ---
 
-#### Non‑Functional Requirements
+### Non‑Functional Requirements
 
 - **Performance**
   - The application must load the first quiz question within **1.5 seconds** after the user selects “Start Quiz”.
@@ -137,7 +136,7 @@ The application follows a linear user journey consisting of four primary screens
   - All interactive elements (buttons, radio buttons, input fields) must have a minimum size of **40×40 px** to support accessibility and ease of use.
   
   
-### Accessibility
+- **Accessibility**
 
 - The user interface must use a minimum font size of **12pt** for readability.
 - Buttons and radio buttons must have a minimum interactive size of **32×32 pixels**.
@@ -207,7 +206,10 @@ The application follows a linear user journey consisting of four primary screens
   - Runs automated tests on every commit or pull request.
   - Helps maintain code quality and ensures new updates do not break existing functionality.
 
+- **Class Diagram**
+  - Below is the class diagram : 
 
+  ![Class Diagram](Images/Class_Diagram.png)
 
 
 
