@@ -205,6 +205,7 @@ The application follows a linear user journey consisting of four primary screens
   - Runs automated tests on every commit or pull request.
   - Helps maintain code quality and ensures new updates do not break existing functionality.
 
+--- 
 ### Class Diagram
   - Below is the class diagram : 
 
