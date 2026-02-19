@@ -217,7 +217,8 @@ The application follows a linear user journey consisting of four primary screens
 
   ### GUI
 
-   **Welcome Screen** - WelcomeScreen is the initial GUI screen displayed when the application starts.
+   ### Welcome Screen 
+   - WelcomeScreen is the initial GUI screen displayed when the application starts.
 
    ``` python
     class WelcomeScreen(tk.Frame):
@@ -228,7 +229,7 @@ The application follows a linear user journey consisting of four primary screens
 
    ```
 
-  - Class Inheritance & Initialization - Inheriting from tk.Frame makes the screen a self-contained, reusable component. Storing callbacks as instance variables is crucial for communication between the UI and application logic, allowing the screen to respond to user actions.
+  - Class Inheritance & Initialisation - Inheriting from tk.Frame makes the screen a self-contained, reusable component. Storing callbacks as instance variables is crucial for communication between the UI and application logic, allowing the screen to respond to user actions.
 
   ``` python
       self.grid_columnconfigure(0, weight=1)
@@ -257,5 +258,99 @@ The application follows a linear user journey consisting of four primary screens
   - This error handling prevents the application from crashing if the image file is missing or corrupted, it demonstrates proffesional programming and makes the program robust. 
 
   
+### Question Screen 
+- Displays a quiz question with multiple choice options and supports two distinct modes: question mode where users select answers, and feedback mode where answers are revealed.
+
+``` python
+class QuestionScreen(tk.Frame):
+    def __init__(self, parent, submit_callback, next_callback):
+        super().__init__(parent)
+        self.submit_callback = submit_callback
+        self.next_callback = next_callback
+        self.state: Literal["question", "feedback"] = "question"
+        self.selected = tk.IntVar(value=-1)
+```
+- Class Inheritance & Initialisation - Inheriting from tk.Frame makes the screen a self-contained, reusable component that manages both the question display and answer collection. Storing callbacks as instance variables (submit_callback and next_callback) allows for communication between the UI and the main application controller. The state variable tracks which mode the screen is in, and selected tracks which option the user picked. 
+
+
+``` python 
+def set_question(self, q: Question):
+    self.question = q
+    self.q_text.config(text=q.text)
+    self.selected.set(-1)
+    self._render_options(q.options)
+```
+
+- This method loads a new question onto the screen by updating the question text and rendering all answer options. It resets the selection to -1 (nothing selected) to ensure users start fresh with each new question.
+
+
+``` python
+def show_question_mode(self):
+    self.state = "question"
+    self.lock_inputs(False)
+    self.status_lbl.config(text="")
+    self.submit_btn.grid(row=0, column=0, padx=4)
+    self.next_btn.grid_forget()
+```
+
+- This method switches the screen to question mode by unlocking radio buttons, clearing status messages, and showing the Submit button while hiding the Next button. This mode allows users to freely select and change their answer before submitting.
+
+
+``` python
+def show_feedback_mode(self, correct_index: int, selected_index: int):
+    self.state = "feedback"
+    self.lock_inputs(True)
+    for i, lbl in enumerate(self._option_labels):
+        if i == selected_index == correct_index:
+            lbl.config(text="✓", foreground="green")
+        elif i == selected_index and selected_index != correct_index:
+            lbl.config(text="✗", foreground="red")
+        elif i == correct_index:
+            lbl.config(text="✓", foreground="green")
+
+```
+- This method switches to feedback mode by locking the radio buttons and displaying visual feedback symbols. A green checkmark (✓) appears next to the correct answer, and a red X (✗) appears next to the user's answer if it was wrong. 
+
+
+``` python
+
+def lock_inputs(self, locked: bool):
+    for rb in self._radio_widgets:
+        rb.config(state="disabled" if locked else "normal")
+```
+- This method enables or disables all radio buttons based on the locked parameter.
+
+``` python
+# Input validation
+def on_submit(self):
+    sel = self.get_selection()
+    if sel is None:
+        self.status_lbl.config(text="Please select an answer before submitting.")
+        if self._radio_widgets:
+            self._radio_widgets[0].focus_set()
+        return
+    self.submit_callback(sel)
+```
+- This method validates that the user has actually selected an answer before allowing submission. If no answer is selected, it displays an error message and focuses the first option to guide the user. If valid, it calls the submit callback to pass the selected index to the main controller, demonstrating proper error handling and user guidance.
+
+
+``` python
+def _render_options(self, options: list[str]):
+    for w in self.options_frame.winfo_children():
+        w.destroy()
+    self._radio_widgets.clear()
+    self._option_labels.clear()
+    
+    for i, opt in enumerate(options):
+        row = ttk.Frame(self.options_frame)
+        row.pack(anchor="w", pady=2)
+        rb = ttk.Radiobutton(row, text=opt, value=i, variable=self.selected)
+        rb.pack(side="left")
+        fb = ttk.Label(row, width=2)
+        fb.pack(side="left", padx=(8, 0))
+        self._radio_widgets.append(rb)
+        self._option_labels.append(fb)
+```
+- This method creates radio buttons for each answer option. It first clears any previously rendered options, then creates a row for each option containing both a radio button and a placeholder label for feedback symbols.
 
 

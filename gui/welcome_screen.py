@@ -40,7 +40,6 @@ class WelcomeScreen(tk.Frame):
             exit_callback (function): Function to call when "Exit" is clicked
                                      Takes no parameters
         """
-        super().__init__(parent, bg = '#D3AF37')
         self.start_callback = start_callback
         self.exit_callback = exit_callback
 

@@ -3,7 +3,7 @@ from tkinter import PhotoImage, ttk, messagebox
 # Importing Screen classes : 
 from .gui import question_screen, results_screen, stored_results_screen, welcome_screen
 # Importing logic classes : 
-from .logic import question, quiz, result, validate
+from .logic import models, quiz, validate
 # Importing data class : 
 from .data import repository
 
