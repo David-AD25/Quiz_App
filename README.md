@@ -220,20 +220,20 @@ The application follows a linear user journey consisting of four primary screens
    **Welcome Screen**
    - WelcomeScreen is the initial GUI screen displayed when the application starts.
 
-   '''
+   ```
     class WelcomeScreen(tk.Frame):
     def __init__(self, parent, start_callback, exit_callback):
         super().__init__(parent, bg='#D3AF37')
         self.start_callback = start_callback
         self.exit_callback = exit_callback
 
-      '''
+   ```
 
   - Class Inheritance & Initialization - Inheriting from tk.Frame makes the screen a self-contained, reusable component. Storing callbacks as instance variables is crucial for communication between the UI and application logic, allowing the screen to respond to user actions.
 
-  '''
+  ```
       self.grid_columnconfigure(0, weight=1)
-  '''
+  ```
   - This configures the layout of the screen. 
 
 
