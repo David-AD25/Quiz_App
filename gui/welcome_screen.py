@@ -48,7 +48,7 @@ class WelcomeScreen(tk.Frame):
         ttk.Label(self, text="IBM Code of Conduct & Ethics Quiz",  font=("Segoe UI", 20, "bold"),).grid(
             row=0, column=0, pady=(24, 8), sticky="n"
         )
-        
+
         # Load and display logo - resized to 100x100
         logo_path = "Images/IBM_Logo.png"
         try:
@@ -65,16 +65,19 @@ class WelcomeScreen(tk.Frame):
                 "data confidentiality, responsible use of technology, and reporting unethical behaviour.")
         ttk.Label(self, text=description, wraplength=700, justify="center").grid(row=2, column=0, pady=(0, 16), padx=24)
 
+        # User input Box :
         self.name_var = tk.StringVar()
         ttk.Label(self, text="Your name :").grid(row=3, column=0, pady=(8, 4))
         self.name_entry = ttk.Entry(self, textvariable=self.name_var, width=40)
         self.name_entry.grid(row=4, column=0, pady=(0, 16))
 
+        # Buttons : 
         btns = ttk.Frame(self)
         btns.grid(row=5, column=0, pady=(8, 24))
         ttk.Button(btns, text="Start Quiz", command=self.on_start).grid(row=0, column=0, padx=6)
         ttk.Button(btns, text="Exit", command=self.exit_callback).grid(row=0, column=1, padx=6)
-
+    
+    # Call backs : 
     def on_start(self):
         name = self.name_var.get().strip()
         self.start_callback(name)
