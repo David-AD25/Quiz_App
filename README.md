@@ -213,14 +213,13 @@ The application follows a linear user journey consisting of four primary screens
 
 
 --- 
-### Development :
+## Development 
 
-  ## GUI
+  ### GUI
 
-   **Welcome Screen**
-   - WelcomeScreen is the initial GUI screen displayed when the application starts.
+   **Welcome Screen** - WelcomeScreen is the initial GUI screen displayed when the application starts.
 
-   ```
+   ``` python
     class WelcomeScreen(tk.Frame):
     def __init__(self, parent, start_callback, exit_callback):
         super().__init__(parent, bg='#D3AF37')
@@ -231,11 +230,32 @@ The application follows a linear user journey consisting of four primary screens
 
   - Class Inheritance & Initialization - Inheriting from tk.Frame makes the screen a self-contained, reusable component. Storing callbacks as instance variables is crucial for communication between the UI and application logic, allowing the screen to respond to user actions.
 
-  ```
+  ``` python
       self.grid_columnconfigure(0, weight=1)
   ```
   - This configures the layout of the screen. 
 
+  
+  ``` python
+      ttk.Button(btns, text="Start Quiz", command=self.on_start).grid(row=0, column=0, padx=6)
+  ```
+  - The command=self.on_start parameter connects the button click to an event handler. Without this, clicking the button does nothing and no communication occurs with the rest of the application.
 
+  ``` python
+      def on_start(self):
+    name = self.name_var.get().strip()
+    self.start_callback(name)
+  ```
+  - This method retrieves user input and passes it to the main controller via the callback. It's the critical "exit point" where the welcome screen transitions to the quiz. 
+
+  ``` python 
+  try:
+    logo_image = PhotoImage(file=logo_path)
+  except tk.TclError as e:
+    print(f"Error loading logo: {e}")
+  ```
+  - This error handling prevents the application from crashing if the image file is missing or corrupted, it demonstrates proffesional programming and makes the program robust. 
+
+  
 
 

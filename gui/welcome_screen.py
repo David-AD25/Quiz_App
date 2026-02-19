@@ -79,8 +79,13 @@ class WelcomeScreen(tk.Frame):
     
     # Call backs : 
     def on_start(self):
+    
         name = self.name_var.get().strip()
         self.start_callback(name)
 
+
     def focus_default(self):
+        '''
+         This auto-focuses the name entry field, allowing users to immediately start typing without clicking.
+        '''
         self.name_entry.focus_set()
