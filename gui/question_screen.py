@@ -163,7 +163,7 @@ class QuestionScreen(tk.Frame):
         val = self.selected.get()
         return val if val >= 0 else None
 
-    # --- Events ---
+    # Events
     def on_submit(self):
         """
         Handles the Submit button click event.
@@ -189,7 +189,7 @@ class QuestionScreen(tk.Frame):
         """
         self.next_callback()
 
-    # --- Rendering helpers ---
+    # Widgets Rendering  
     def _render_options(self, options: list[str]):
         """
         Dynamically create radio buttons for each answer option.

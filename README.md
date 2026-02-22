@@ -70,7 +70,7 @@ The application follows a linear user journey consisting of four primary screens
 
   - **Current Results View**
     - Displays the user’s name entered at the start of the quiz.
-    - Shows the user’s final score - percentage  of correct answers.
+    - Shows the user’s final score in the format :  number of correct answers/ total number of questions. E.g 8/10
     - Displays the total time taken to complete the quiz.
     - Ensures results are presented in a clear and readable format.
     - Includes a button to access stored quiz results or to exit the application.
@@ -141,6 +141,7 @@ The application follows a linear user journey consisting of four primary screens
   - Buttons and radio buttons must have a minimum interactive size of **32×32 pixels**.
   - Text and background colour contrast must be at least **3:1**.
   - All error or validation messages must be clearly displayed for a minimum of **3 seconds** before navigating away.
+  - All controls must be fully keyboard-operable
 
 - **Reliability**
   - The system must not lose quiz results during a normal session; stored results must persist across restarts.
@@ -257,7 +258,7 @@ The application follows a linear user journey consisting of four primary screens
   ```
   - This error handling prevents the application from crashing if the image file is missing or corrupted, it demonstrates proffesional programming and makes the program robust. 
 
-  
+  ---
 ### Question Screen 
 - Displays a quiz question with multiple choice options and supports two distinct modes: question mode where users select answers, and feedback mode where answers are revealed.
 
@@ -353,4 +354,115 @@ def _render_options(self, options: list[str]):
 ```
 - This method creates radio buttons for each answer option. It first clears any previously rendered options, then creates a row for each option containing both a radio button and a placeholder label for feedback symbols.
 
+  ---
+### Results Screen 
+-  ResultsScreen displays the final quiz results to the user after completing the quiz. It shows the user's name, final score, and time taken, along with a button to view all previous quiz attempts.
 
+``` python 
+class ResultsScreen(ttk.Frame):
+    def __init__(self, parent, view_results_callback):
+        super().__init__(parent)
+        self.view_results_callback = view_results_callback
+        
+        self.name_lbl = ttk.Label(self, text="")
+        self.score_lbl = ttk.Label(self, text="")
+        self.time_lbl = ttk.Label(self, text="")
+
+```
+
+- Inheriting from ttk.Frame makes the results screen a self-contained and reusable component. Storing view_results_callback as an instance variable allows the screen to communicate with the main controller when the user wants to view past results. Three empty labels (name_lbl, score_lbl, time_lbl) are created to hold the result information, which will be populated after the quiz completes.
+
+``` python 
+def display(self, result):
+    self.name_lbl.config(text=f"Name: {result.user_name or '—'}")
+    self.score_lbl.config(text=f"Score: {result.score}/{result.total_questions}")
+    self.time_lbl.config(text=f"Time taken: {result.time_taken}s")
+```
+
+- This method takes a Result object and populates the three labels with the actual quiz results. It displays the user's name, the final score  and the time taken in seconds. This separation of data and display allows the screen to be reusable for different quiz results without needing to recreate the UI.
+
+``` python 
+actions = ttk.Frame(self)
+actions.grid(row=4, column=0, pady=(12, 0), sticky="w")
+ttk.Button(actions, text="Results File (View Previous Results)", command=self.on_view_results).grid(row=0, column=0, padx=4)
+```
+
+- Creates a container frame (actions) to hold View Previous Results button. The command=self.on_view_results parameter connects the button to an event handler. Using a container frame makes the code more reusable, and easier to add new features to the system at a later date. 
+
+``` python
+def on_view_results(self):
+    self.view_results_callback()
+```
+
+- This event handler calls the view_results_callback when the user clicks the "View Previous Results" button, allowing the screen to trigger navigation to the stored results.
+
+  ---
+### stored Results Screen 
+
+- StoredResultsScreen displays all past quiz attempts in a table format, allowing users to review their past performance with key metrics including name, score, date/time, and time taken to complete the quiz.
+
+
+``` python 
+self.table = ttk.Treeview(
+    self, 
+    columns=("name", "score", "timestamp", "time_taken"), 
+    show="headings", 
+    height=12
+)
+
+```
+
+- I used Tkinter's Treeview widget with four columns to display results in a clean, organized table format. The Treeview is ideal for displaying structured data because it supports multiple columns and sorting capabilities. The height=12 parameter allows 12 rows to be visible at once, this provides an efficient way to display a results without overwhelming the user interface.
+
+
+``` python 
+for col, text in (("name", "Name"), ("score", "Score"), ("timestamp", "Date & Time"), 
+                 ("time_taken", "Time Taken")):
+    self.table.heading(col, text=text)
+    self.table.column(col, width=150, anchor="w")
+
+```
+- This loop creates four columns for the table. For each column, it does two things: (1) sets the heading text that appears at the top (like "Name", "Score", "Date & Time", "Time Taken"), and (2) configures the column width to 150 pixels and aligns the text to the left.
+
+``` python 
+
+def display(self, results):
+    for r in results:
+        # Convert seconds to minutes and seconds 
+        minutes = r.time_taken // 60
+        seconds = r.time_taken % 60
+        time_formatted = f"{minutes}m {seconds}s"
+        
+        self.table.insert(
+            "", 
+            "end", 
+            values=(
+                r.user_name or "—",
+                f"{r.score}/{r.total_questions}",
+                r.timestamp,
+                time_formatted
+            )
+        )
+
+```
+
+-  This method populates a table with all previous quiz attempts by iterating through a list of Result objects. Each result is inserted as a row showing the user's name  score in "correct/total" format, the full date and time of the quiz, and the time taken converted from seconds to a readable "Xm Ys" format. The time conversion uses integer division (//) to get minutes and the modulo operator (%) to get remaining seconds. 
+
+
+
+``` python 
+
+def on_exit(self):
+    self.exit_callback()
+
+ ```
+- This method allows users to close the application and complete their session after reviewing past results.
+
+
+``` python 
+
+def focus_default(self):
+    self.table.focus_set()
+``` 
+
+-  Allows users to navigate through rows using arrow keys without requiring a mouse click
