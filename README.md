@@ -213,10 +213,10 @@ The application follows a linear user journey consisting of four primary screens
   ![Class Diagram](Images/Class_Diagram.png)
 
 
---- 
+
 ## Development 
 
-  ### GUI
+  ### GUI Layer
 
    ### Welcome Screen 
    - WelcomeScreen is the initial GUI screen displayed when the application starts.
@@ -354,7 +354,7 @@ def _render_options(self, options: list[str]):
 ```
 - This method creates radio buttons for each answer option. It first clears any previously rendered options, then creates a row for each option containing both a radio button and a placeholder label for feedback symbols.
 
-  ---
+---
 ### Results Screen 
 -  ResultsScreen displays the final quiz results to the user after completing the quiz. It shows the user's name, final score, and time taken, along with a button to view all previous quiz attempts.
 
@@ -396,7 +396,7 @@ def on_view_results(self):
 
 - This event handler calls the view_results_callback when the user clicks the "View Previous Results" button, allowing the screen to trigger navigation to the stored results.
 
-  ---
+---
 ### stored Results Screen 
 
 - StoredResultsScreen displays all past quiz attempts in a table format, allowing users to review their past performance with key metrics including name, score, date/time, and time taken to complete the quiz.
@@ -466,3 +466,202 @@ def focus_default(self):
 ``` 
 
 -  Allows users to navigate through rows using arrow keys without requiring a mouse click
+
+--- 
+### Logic Layer
+
+**Models**
+
+This module contains the core data classes used throughout the application:
+- Question: Represents a single quiz question with options and correct answer
+- Result: Represents the outcome of a completed quiz attempt
+
+--- 
+#### **Question Class - Data Structure for Quiz Questions**
+``` python 
+@dataclass(frozen=True)
+class Question:
+    id: str
+    text: str
+    options: List[str]
+    correct_index: int
+``` 
+- **@dataclass(frozen=True)** decorator automatically creates a class for storing data while making it immutable (cannot be changed after creation). This ensures questions remain exactly as they are once loaded from the CSV file. The frozen property prevents accidental modifications and protects data integrity. 
+
+``` python 
+# Validation
+def is_valid(self) -> bool:
+    return bool(self.text.strip()) and len(self.options) >= 2 and 0 <= self.correct_index < len(self.options)
+``` 
+- **The is_valid()** method checks three  conditions: (1) the question text is not empty, (2) there are at least 2 answer options, and (3) the correct answer index is within bounds. This validation catches data errors before the quiz starts, preventing crashes or undefined behavior during gameplay. 
+
+---
+#### **Result Class - Data Structure for Quiz Results**
+
+```python
+@dataclass(frozen=True)
+class Result:
+    user_name: Optional[str]
+    score: int
+    total_questions: int
+    time_taken: float
+    timestamp: str
+```
+
+- **Immutable Result Storage** - Similar to Question, Result uses `@dataclass(frozen=True)` to create an immutable record of how a user performed on the quiz. This ensures results cannot be accidentally modified after being created, maintaining historical accuracy and preventing data corruption.
+
+```python
+def to_dict(self) -> dict:
+    return {
+        "user_name": self.user_name or "",
+        "score": self.score,
+        "total_questions": self.total_questions,
+        "time_taken": self.time_taken,
+        "timestamp": self.timestamp,
+    }
+```
+
+- **Converting to Dictionary Format** - The `to_dict()` method converts the Result object into a dictionary, making it easy to save to CSV files or JSON. The `self.user_name or ""` handles the case where a user didn't enter their name by converting None to an empty string, ensuring consistent data when persisting to files.
+
+---
+### Quiz Logic - The Quiz class manages the entire quiz flow, tracking questions, answers, timing, and score calculation.
+
+
+
+#### **Starting the Quiz**
+
+```python
+def start(self):
+    self.current_index = 0
+    self.user_answers = [None] * len(self.questions)
+    self.start_time = time.time()
+    self.end_time = None
+    self.is_active = True
+```
+
+- **Initialize Quiz State** - Resets the quiz to the beginning by clearing previous answers, setting the current question to 0, and recording the exact start time using `time.time()`. The `is_active = True` flag indicates the quiz is running. This method is called when the user clicks "Start Quiz" on the welcome screen.
+
+---
+
+#### **Getting and Submitting Answers**
+
+```python
+def get_current_question(self) :
+    return self.questions[self.current_index]
+
+def submit_answer(self, selected_index: int):
+    self.user_answers[self.current_index] = selected_index
+```
+
+- **Current Question & Answer Recording** - `get_current_question()` returns the question the user is currently viewing by using `current_index` as an array index. `submit_answer()` stores which option the user selected in the `user_answers` array at the same index position. This parallel array structure keeps answers aligned with their questions.
+
+---
+
+#### **Navigation Through Questions**
+
+```python
+def next_question(self) -> bool:
+    if self.current_index + 1 < len(self.questions):
+        self.current_index += 1
+        return True
+    return False
+```
+
+- **Question Navigation** - Checks if there are more questions remaining before advancing. Returns `True` if successful (move to next question), or `False` if at the last question (quiz should end). The conditional `self.current_index + 1 < len(self.questions)` prevents moving past the final question.
+
+---
+
+#### **Score Calculation**
+
+```python
+def calculate_score(self) -> int:
+    score = 0
+    for ans, q in zip(self.user_answers, self.questions):
+        if ans is not None and ans == q.correct_index:
+            score += 1
+    return score
+```
+
+- **Comparing Answers with Correct Answers** - Loops through user answers paired with their corresponding questions using `zip()`. For each answer, checks if it matches the question's `correct_index`. The `ans is not None` condition handles skipped questions. Returns the total count of correct answers.
+
+---
+
+#### **Finishing the Quiz and Creating Results**
+
+```python
+def finish(self, user_name: str | None):
+    self.end_time = time.time()
+    self.is_active = False
+    time_taken = round(self.end_time - (self.start_time or self.end_time), 2)
+    ts = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+    return Result(
+        user_name=user_name,
+        score=self.calculate_score(),
+        total_questions=len(self.questions),
+        time_taken=time_taken,
+        timestamp=ts
+    )
+```
+
+- **Quiz Completion and Result Generation** - Records the end time and calculates elapsed time by subtracting `start_time` from `end_time` (in seconds). Creates a UTC timestamp for when the quiz was completed. Packages all data into a Result object: user's name, calculated score, total questions, time taken (in seconds, raw format), and timestamp. This Result object is then passed to the results display screens.
+
+---
+
+#### **The Quiz Flow**
+
+```
+1. start() → Record time, reset answers, set is_active = True
+2. Loop:
+   - get_current_question() → Display question
+   - User selects answer
+   - submit_answer() → Record selection
+   - next_question() → Move to next (returns True) or end (returns False)
+3. finish() → Calculate score, record end time, return Result
+```
+
+## Validation logic 
+
+**Validation Module** - Pure utility functions for validating user input and formatting time data.
+
+
+#### **Validating User Answer Selection**
+
+```python
+def validate_selected_answer(idx: int | None, num_options: int) -> bool:
+    return idx is not None and 0 <= idx < num_options
+```
+
+- **Checking Valid Selection** - Ensures the user actually selected an answer and that the selection is within valid bounds. The function checks two conditions: (1) `idx is not None` confirms a selection was made (not empty), and (2) `0 <= idx < num_options` ensures the index points to an actual option. This prevents crashes from out-of-range indices. 
+---
+
+#### **Checking Answer Correctness**
+
+```python
+def check_answer(selected: int, correct: int) -> bool:
+    return selected == correct
+```
+
+- **Answer Comparison** - Compares the user's selected answer index directly with the correct answer index.
+
+---
+
+#### **Formatting Time for Display**
+
+```python
+def format_time(seconds: float) -> str:
+    seconds = int(seconds)
+    m, s = divmod(seconds, 60)
+    h, m = divmod(m, 60)
+    return f"{h:02d}:{m:02d}:{s:02d}" if h else f"{m:02d}:{s:02d}"
+```
+
+- **Converting Seconds to Readable Format** - Transforms raw seconds into a human-readable time string (MM:SS if under 1 hour, or HH:MM:SS if 1+ hours). The `divmod()` function efficiently splits time into components: `divmod(seconds, 60)` extracts minutes and remaining seconds, then `divmod(minutes, 60)` extracts hours and remaining minutes. The format specifier `{h:02d}` adds leading zeros (e.g., "04:05" instead of "4:5"). The conditional `if h` omits hours from display when they're zero, keeping short quiz times compact (e.g., "02:15" instead of "00:02:15").
+
+---
+
+#### **Summary**
+
+These validation functions are **stateless utilities** used throughout the application: answer validation before submission prevents errors, answer checking determines correctness for feedback, and time formatting displays quiz duration in a user-friendly format.
+
+
+
