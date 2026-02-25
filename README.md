@@ -663,5 +663,67 @@ def format_time(seconds: float) -> str:
 
 These validation functions are **stateless utilities** used throughout the application: answer validation before submission prevents errors, answer checking determines correctness for feedback, and time formatting displays quiz duration in a user-friendly format.
 
+## CSV Repository
+**CSV Repository** - Handles all file I/O operations for loading quiz questions and saving/loading quiz results from CSV files.
+
+
+
+#### **Loading Questions from CSV**
+
+```python
+def load_questions(self):
+    choices = row["choices"].split(self.field_sep) if row.get("choices") else []
+    q = Question(
+        id=row.get("id", ""),
+        text=row.get("text", ""),
+        options=[c for c in choices if c],
+        correct_index=int(row.get("correct_index", -1)),
+        category=row.get("category") or None,
+        difficulty=row.get("difficulty") or None,
+    )
+    if q.is_valid():
+        questions.append(q)
+```
+
+- **Reading and Validating Questions** - Opens the questions CSV file and reads each row as a dictionary using `csv.DictReader`. For each row, it splits the choices field using the custom separator (default "||") to extract individual answer options. Creates a Question object and validates it using `is_valid()` before adding to the list. Invalid or malformed rows are skipped silently. Returns an empty list if the file doesn't exist, allowing the app to start even without questions.
+
+---
+
+#### **Saving Quiz Results**
+
+```python
+def append_result(self, r: Result):
+    try:
+        with open(self.results_path, "x", newline="", encoding="utf-8") as f:
+            writer = csv.DictWriter(f, fieldnames=[...])
+            writer.writeheader()
+    except FileExistsError:
+        pass
+    with open(self.results_path, "a", newline="", encoding="utf-8") as f:
+        writer = csv.DictWriter(f, fieldnames=[...])
+        writer.writerow(r.to_dict())
+```
+
+- **Smart File Creation and Appending** - Uses two-step approach: first tries to create the file with headers using mode "x" (exclusive creation), and if the file already exists, catches the exception and skips header creation. Then appends the result using mode "a" (append). This ensures headers are written exactly once while allowing multiple results to be added over time. Converts the Result object to a dictionary using `to_dict()` for CSV writing.
+
+---
+
+#### **Loading Historical Results**
+
+```python
+def load_results(self):
+    results.append(
+        Result(
+            user_name=row.get("user_name") or None,
+            score=int(row.get("score", 0)),
+            total_questions=int(row.get("total_questions", 0)),
+            time_taken=float(row.get("time_taken", 0.0)),
+            timestamp=row.get("timestamp") or "",
+        )
+    )
+```
+
+- **Reconstructing Results from CSV** - Reads the results CSV file and converts each row back into a Result object. Handles type conversions: converts score and total_questions to integers, time_taken to float, and treats empty user_name as None. Malformed rows are skipped to prevent crashes. Returns an empty list if the file doesn't exist, allowing the stored results screen to display gracefully even with no history.
+
 
 
