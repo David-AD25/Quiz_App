@@ -61,8 +61,8 @@ class ResultsScreen(ttk.Frame):
         self.name_lbl.config(text=f"Name: {result.user_name or '—'}")
         self.score_lbl.config(text=f"Score: {result.score}/{result.total_questions}")
         # Convert seconds to minutes and seconds
-        minutes = result.time_taken // 60
-        seconds = result.time_taken % 60
+        minutes = int(result.time_taken // 60)
+        seconds = int(result.time_taken % 60)
         self.time_lbl.config(text=f"Time taken: {minutes}m {seconds}s")
 
     def on_view_results(self):

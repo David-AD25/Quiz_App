@@ -8,7 +8,7 @@ answer tracking, timing, and score calculation.
 import time
 from typing import List
 from datetime import datetime, timezone
-from logic.models import Question, Result
+from .models import Question, Result
 
 
 class Quiz:

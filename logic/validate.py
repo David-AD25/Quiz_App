@@ -57,16 +57,7 @@ def format_time(seconds: float) -> str:
         str: Formatted time string
              - "MM:SS" if under 1 hour (e.g., "04:05")
              - "HH:MM:SS" if 1 hour or more (e.g., "01:04:05")
-    
-    Example:
-        >>> format_time(245.5)  # 4 minutes 5 seconds
-        '04:05'
-        
-        >>> format_time(3661.2)  # 1 hour 1 minute 1 second
-        '01:01:01'
-        
-        >>> format_time(125)  # 2 minutes 5 seconds
-        '02:05'
+   
     
     """
 

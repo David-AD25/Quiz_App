@@ -70,8 +70,8 @@ class StoredResultsScreen(ttk.Frame):
         # Insert each result as a new row in the table
         for r in results:
             # Convert seconds to min and sec 
-            minutes = r.time_taken // 60
-            seconds = r.time_taken % 60
+            minutes = int(r.time_taken // 60)
+            seconds = int(r.time_taken % 60) 
             time_formatted = f"{minutes}m {seconds}s"
             
             self.table.insert(

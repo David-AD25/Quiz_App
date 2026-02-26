@@ -6,7 +6,7 @@ It reads quiz questions from CSV and saves quiz results to CSV.
 """
 
 import csv
-from logic.models import Question, Result
+from ..logic.models import Question, Result
 
 
 class CSVRepository:
@@ -82,8 +82,7 @@ class CSVRepository:
                             text=row.get("text", ""),
                             options=[c for c in choices if c],  # Filter out empty strings
                             correct_index=int(row.get("correct_index", -1)),
-                            category=row.get("category") or None,  # Empty string becomes None
-                            difficulty=row.get("difficulty") or None,  # Empty string becomes None
+                           
                         )
                         
                         #  add the question if it passes validation

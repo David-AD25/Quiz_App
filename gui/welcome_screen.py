@@ -28,7 +28,6 @@ class WelcomeScreen(tk.Frame):
         logo_photo (PhotoImage): Reference to the IBM logo image 
     """
     def __init__(self, parent, start_callback, exit_callback):
-
         """
          
         Initialise the WelcomeScreen with all UI components.
@@ -40,6 +39,7 @@ class WelcomeScreen(tk.Frame):
             exit_callback (function): Function to call when "Exit" is clicked
                                      Takes no parameters
         """
+        super().__init__(parent)
         self.start_callback = start_callback
         self.exit_callback = exit_callback
 
@@ -49,7 +49,7 @@ class WelcomeScreen(tk.Frame):
         )
 
         # Load and display logo - resized to 100x100
-        logo_path = "Images/IBM_Logo.png"
+        logo_path = "App/Images/IBM_Logo.png"
         try:
             logo_image = PhotoImage(file=logo_path)
             # Resize the logo to 100x100 pixels

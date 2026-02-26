@@ -1,20 +1,24 @@
 import tkinter as tk
 from tkinter import PhotoImage, ttk, messagebox
-# Importing Screen classes : 
-from .gui import question_screen, results_screen, stored_results_screen, welcome_screen
-# Importing logic classes : 
-from .logic import models, quiz, validate
-# Importing data class : 
-from .data import repository
+
+from .gui.welcome_screen import WelcomeScreen
+from .gui.question_screen import QuestionScreen
+from .gui.results_screen import ResultsScreen
+from .gui.stored_results_screen import StoredResultsScreen
+
+from .logic.models import Question
+from .logic.quiz import Quiz  
+from .logic.validate import format_time
+from .data.repository import CSVRepository
 
 
 
 
 class App(tk.Tk):
-    def __init__(self, questions_path="csv_files/questions.csv", results_path="csv_files/results.csv"):
+    def __init__(self, questions_path="App/csv_files/questions.csv", results_path="App/csv_files/results.csv"):
         super().__init__()
 
-        
+
         self.title("IBM Code of Conduct & Ethics Quiz")
         self.geometry("900x600")
         self.minsize(760, 480)
@@ -24,10 +28,8 @@ class App(tk.Tk):
         self.container.pack(fill="both", expand=True)
 
         # Data + logic dependencies:
-        self.repo = repository(questions_path, results_path) # Handles loading/saving questions and results from CSV files
-
-        self.quiz = quiz | None = None # hold the Quiz object once the user starts PROBLEM !!!!
-        
+        self.repo = CSVRepository(questions_path, results_path) # Handles loading/saving questions and results from CSV files
+        self.quiz : Quiz | None = None # hold the Quiz object once the user starts PROBLEM !!!!
         self.current_user: str = "" 
 
         self.show_welcome()
@@ -37,7 +39,7 @@ class App(tk.Tk):
     # --- Navigation helpers ---
     def clear(self):
         """
-        Docstring for clear : 
+    
 
         Function, which clears everything currently in the container 
         
@@ -49,13 +51,13 @@ class App(tk.Tk):
 
     def show_welcome(self):
         """
-        Docstring for show_welcome: 
+        
         
         Loads the Welcome screen and puts it in the container. Passing two functions start_quiz_flow() and exit_app() 
         into the Welcome screen so it knows what to do when the user clicks a button. 
         """ 
-        self._clear()
-        screen = welcome_screen(
+        self.clear()
+        screen = WelcomeScreen(
             parent=self.container,
             start_callback=self.start_quiz_flow,
             exit_callback=self._exit_app
@@ -67,7 +69,7 @@ class App(tk.Tk):
 
     def start_quiz_flow(self, name: str):
         """
-        Docstring for start_quiz_flow
+        
         
         :param name: Username
         Save their name
@@ -83,17 +85,17 @@ class App(tk.Tk):
         if not questions:
             messagebox.showwarning("No questions", "No questions available. Please add questions to continue.")
             return
-        self.quiz = quiz(questions=questions)
+        self.quiz = Quiz(questions=questions)
         self.quiz.start()
         self.show_question()
 
         
 
     def show_question(self):
-        self._clear()
+        self.clear()
         assert self.quiz is not None
         q = self.quiz.get_current_question()
-        screen = question_screen(
+        screen = QuestionScreen(
             parent=self.container,
             submit_callback=self._submit_answer_and_feedback,
             next_callback=self._go_next_or_finish
@@ -101,7 +103,6 @@ class App(tk.Tk):
         screen.pack(fill="both", expand=True)
         screen.set_question(q)
         screen.show_question_mode()
-        screen.bind_keys()
         screen.focus_default()
 
     def _submit_answer_and_feedback(self, selected_idx: int):
@@ -123,14 +124,14 @@ class App(tk.Tk):
             self.show_results(result)
 
     def show_results(self, result):
-        self._clear()
+        self.clear()
         # persist result
         try:
             self.repo.append_result(result)
         except Exception as ex:
             messagebox.showerror("Save failed", f"Could not save results: {ex}")
 
-        screen = results_screen(
+        screen = ResultsScreen(
             parent=self.container,
             view_results_callback=self.show_stored_results
         )
@@ -139,11 +140,11 @@ class App(tk.Tk):
         screen.focus_default()
 
     def show_stored_results(self):
-        self._clear()
+        self.clear()
         results = self.repo.load_results()
-        screen = stored_results_screen(
+        screen = StoredResultsScreen(
             parent=self.container,
-            back_callback=lambda: self.show_results(self.repo.load_results()[-1]) if self.repo.load_results() else self.show_welcome()
+            exit_callback=self._exit_app
         )
         screen.pack(fill="both", expand=True)
         screen.display(results)
