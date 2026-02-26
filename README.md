@@ -723,6 +723,20 @@ def load_results(self):
     )
 ```
 
+
+```python
+def load_results(self):
+    results.append(
+        Result(
+            user_name=row.get("user_name") or None,
+            score=int(row.get("score", 0)),
+            total_questions=int(row.get("total_questions", 0)),
+            time_taken=float(row.get("time_taken", 0.0)),
+            timestamp=row.get("timestamp") or "",
+        )
+    )
+```
+
 - **Reconstructing Results from CSV** - Reads the results CSV file and converts each row back into a Result object. Handles type conversions: converts score and total_questions to integers, time_taken to float, and treats empty user_name as None. Malformed rows are skipped to prevent crashes. Returns an empty list if the file doesn't exist, allowing the stored results screen to display gracefully even with no history.
 
 

@@ -1,0 +1,6 @@
+id,text,choices,correct_index
+q001,What does IBM stand for?,International Business Machines||Internet Business Management||Integrated Business Models||International Banking Methods,0
+q002,Which of the following is a key principle of IBM's Code of Conduct?,Always prioritize profit over integrity||Maintain confidentiality of sensitive information||Share company secrets with trusted colleagues||Ignore conflicts of interest,1
+q003,What should you do if you witness unethical behavior at work?,Ignore it and move on||Tell your friends about it||Report it to the appropriate authority||Participate in it silently,2
+q004,How should you handle confidential customer data?,Store it in a publicly accessible folder||Use strong passwords and encryption||Share it freely with colleagues||Leave it on your desk when not in use,1
+q005,What is a conflict of interest?,When you benefit personally from a business decision||When you disagree with your manager||When you work overtime||When you help a colleague,0

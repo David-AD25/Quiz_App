@@ -11,7 +11,7 @@ from .data import repository
 
 
 class App(tk.Tk):
-    def __init__(self, questions_path="data/questions.csv", results_path="data/results.csv"):
+    def __init__(self, questions_path="csv_files/questions.csv", results_path="csv_files/results.csv"):
         super().__init__()
 
         
@@ -26,7 +26,7 @@ class App(tk.Tk):
         # Data + logic dependencies:
         self.repo = repository(questions_path, results_path) # Handles loading/saving questions and results from CSV files
 
-        self.quiz: quiz | None = None # hold the Quiz object once the user starts PROBLEM !!!!
+        self.quiz = quiz | None = None # hold the Quiz object once the user starts PROBLEM !!!!
         
         self.current_user: str = "" 
 
