@@ -214,7 +214,7 @@ The application follows a linear user journey consisting of four primary screens
 
 
 
-## Development 
+## Development Section
 
   ### GUI Layer
 
@@ -741,3 +741,194 @@ def load_results(self):
 
 
 
+
+# Testing Strategy & Methodology
+
+### Testing Approach Overview
+
+My testing strategy for the IBM Code of Conduct & Ethics Quiz application uses a two-tiered approach combining **manual testing** and **unit testing**. This combination  ensures comprehensive coverage of both user-facing functionality and underlying business logic.
+
+### Why This Approach?
+
+**Manual Testing** forms the foundation of the strategy because it allows me to validate the complete user journey and end-to-end workflows. By systematically testing each screen (Welcome, Question, Results, Stored Results), I can verify that the application behaves as intended from a user's perspective. Manual testing is essential for evaluating user experience, checking responsive design, validating error messages, and confirming data persistence across quiz attempts. This approach catches integration issues that might not be apparent when testing individual components in isolation.
+
+**Unit Testing** complements manual testing by focusing on the accuracy of individual functions and methods in isolation. By writing automated tests for core business logic (validation functions, quiz state management, CSV data handling, model validation), I can quickly verify that these components work correctly and continue to work correctly as the code evolves. Unit tests allow me to test  fundamental operations such as : answer validation, score calculation, time formatting, and data conversion—produce correct results under various conditions. Additionally, unit tests serve as executable documentation, demonstrating how each function should behave.
+
+### Testing Plan Structure
+
+**Phase 1: Manual Testing** (20 test cases across all screens)
+- Tests the complete user flow: Welcome Screen → Question Navigation → Results Display → Historical Results Viewing
+- Validates UI/UX: button clicks, input fields, error messages, visual feedback
+- Confirms data integrity: scores calculated correctly, results saved to CSV, persistence works across sessions
+- Tests edge cases: empty names, single character inputs, multiple quiz attempts
+- Error handling: verifies graceful failure when CSV files missing
+
+**Phase 2: Unit Testing** (Automated tests for core modules)
+- Validation functions: `validate_selected_answer()`, `check_answer()`, `format_time()`
+- Quiz logic: initialization, answer submission, score calculation, result creation
+- Models: `Question.is_valid()`, `Result.to_dict()`
+- Data persistence: CSV reading and writing operations
+
+### Justification of Testing Methods
+
+1. **Manual Testing is Justified Because:**
+   - Validates the actual user experience, not just code correctness
+   - Catches UI/UX issues that automated tests miss (layout, colors, spacing)
+   - Tests integration between multiple components working together
+   - Allows testing of error scenarios and edge cases interactively
+   - Provides visual evidence (screenshots) for documentation
+
+2. **Unit Testing is Justified Because:**
+   - Tests individual functions in isolation, ensuring each component is reliable
+   - Quickly identifies bugs in business logic (score calculation, time conversion)
+   - Provides fast feedback during development (runs in seconds)
+   - Makes refactoring safer by catching regressions immediately
+   - Documents expected behavior through test cases
+   - Achieves high code coverage of critical functions
+
+By combining both approaches, we achieve **comprehensive coverage**: manual testing verifies the application works end-to-end from a user perspective, while unit testing ensures the underlying code is solid and maintainable. This two-tiered strategy reduces the risk of undetected bugs while also making the codebase more testable and maintainable for future development.
+
+
+
+### Manual Testing Table
+
+
+
+| # | Test Case | Steps | Expected Result | Actual Result | Status | Notes |
+|---|-----------|-------|-----------------|---------------|--------|-------|
+| 1 | App Launch | 1. Run `python3 -m app.main` from project root | Welcome screen displays with title, logo, description, name input field, and two buttons (Start Quiz, Exit) | Welcome Screen alongside all its widgets were displayed| Pass | Environment: macOS, Python 3.13. IBM logo loads correctly. Window dimensions 900x600 as specified. |
+| 2 | Welcome Screen - Enter Name | 1. Launch app 2. Type "Test User" in name field | Name appears in input field | Test User appeared in the input field |Pass | Tested with various inputs: single word, multiple words, special characters (@, #, $). All work correctly. |
+| 3 | Welcome Screen - Start Quiz (with name) | 1. Enter "David" as name 2. Click "Start Quiz" | First question screen displays with question text and 4 radio button options | The question screen is displayed alongside 4 answer options | Pass | Name "David" is stored and later displays in results. Questions load from CSV without delay. |
+| 4 | Welcome Screen - Start Quiz (without name) | 1. Leave name field empty 2. Click "Start Quiz" | First question screen displays (name is optional) | The first question screen was displayed| Pass | When empty, name defaults to "Anonymous" in results (as per updated model). No error message shown. |
+| 5 | Welcome Screen - Exit Button | 1. Click "Exit" button | Application closes |Application closed |Pass | Clean exit with no console errors. Verified: process terminates correctly. |
+| 6 | Question Screen - Display Question | 1. Start quiz | Question 1 displays: "What does IBM stand for?" with 4 options |Question 1 is displayed |Pass | All 5 questions from questions.csv load successfully. |
+| 7 | Question Screen - Select Answer | 1. On question screen 2. Click first radio button | First option is selected (radio button fills) | First radio button if filled |Pass | Radio button selection is mutually exclusive - selecting one deselects others. Visual feedback immediate. |
+| 8 | Question Screen - Submit Without Selection | 1. On question screen 2. Click "Submit" without selecting answer | Error message displays: "Please select an answer before submitting." | Error message is displayed |Pass | Error message appears in blue status label. User must select answer before progressing. Prevents invalid submissions. |
+| 9 | Question Screen - Submit Correct Answer | 1. Select option 1 (International Business Machines) for Q1 2. Click "Submit" | Feedback mode displays with green ✓ next to correct answer, status message: "Correct!" |Feedback mode is displayed |Pass | Green checkmark (✓) appears in green color. Status message "Correct!" displays immediately. Transition smooth. |
+| 10 | Question Screen - Submit Incorrect Answer | 1. Select option 3  for Q2 2. Click "Submit" | Feedback mode displays with red ✗ next to selected answer, green ✓ next to correct answer, status message: "Incorrect. Review the correct answer above." |Feedback is displayed on screen |Pass | Red X (✗) on wrong answer, green ✓ on correct answer. Both visible for learning. Status message in red for visibility. |
+| 11 | Question Screen - Lock Inputs in Feedback | 1. Submit an answer (feedback mode) 2. Try clicking other radio buttons | Radio buttons are disabled, cannot select other options |  The radio buttons are locked, user can't select other options | Pass| Radio buttons appear grayed out after feedback. Prevents answer modification. User must click Next to proceed. |
+| 12 | Question Screen - Next Button | 1. In feedback mode 2. Click "Next" | New question is displayed, returns to question mode with new question | A new question is displayed  |Pass | Smooth transition. Previous selection cleared. Submit button reappears, Next button hidden. |
+| 13 | Quiz Navigation - All 4 Questions | 1. Complete all 4 questions with various answers | All 4 questions display in sequence without errors |Quiz ran as expected, navigated through all 4 questions |Pass| Completed full quiz. No crashes or freezes. All questions accessible. |
+| 14 | Results Screen - Display Final Score | 1. Complete all 4 questions 2. Results screen displays | Screen shows: User name, Final Score (e.g., 3/4), Time Taken (e.g.,  30s), "View Previous Results" button | Results screen and all its widgets are displayed|Pass | Results display: Name "David", Score "3/4", Time "30s". Format clean and readable. Button styling consistent. |
+| 15 | Results Screen - View Previous Results | 1. Click "View Previous Results" button | StoredResultsScreen displays with table of all past quiz attempts |Past results are displayd in a table format |Pass | Table appears with existing results from results.csv. Smooth navigation. Data preserved from previous tests. |
+| 16 | Stored Results Screen - Display Table | 1. On Stored Results screen | Table displays with columns: Name, Score, Date & Time, Time Taken with sample data |Results screen and its widgets are displayed |Pass | 4 columns displayed correctly. Table headers: Name, Score, Date & Time, Time Taken. Data rows populated from CSV. |
+| 17 | Stored Results Screen - Exit Button | 1. On Stored Results screen 2. Click "Exit" | Application closes completely |Application closed | Pass| Clicking Exit terminates entire application. |
+| 18 | Error Handling - No Questions | 1. Delete questions.csv 2. Launch app 3. Try to start quiz | Warning dialog displays: "No questions available. Please add questions to continue." |Error message is displayed |Pass | Error handling works, message appears with warning icon. User can click OK and return to welcome screen. |
+| 19 | Multiple Quiz Attempts | 1. Complete quiz as "User1" 2.  View stored results |previous results saved with correct names, scores, and times |Allows for multiple attempts |Pass | User1: score 4/4, David: score 3/4. Both visible in stored results. Names, scores, timestamps all correct. CSV multi-entry working. |
+| 20 | Edge Case - Single Character Name | 1. Enter "D" as name 2. Complete quiz | Quiz works, result saves with name "D" | | | Single character name accepted. Result displays with name "D" in stored results table. No validation errors. Edge case handled. |
+
+---
+
+
+**Total Test Cases:** 20
+
+**Test Categories:**
+- Welcome Screen: 5 tests
+- Question Screen: 7 tests
+- Results Screen: 2 tests
+- Stored Results Screen: 2 tests
+- Data Persistence: 2 tests
+- Error Handling: 1 test
+- Edge Cases: 1 test
+
+
+## Test Evidence - Screenshots
+
+### Welcome Screen
+**Test #1**
+<img src="testing/screenshots/App Launch.png" width="600" alt="App Launch">
+---
+
+**Test #2**
+<img src="testing/screenshots/Enter Name.png" width="600" alt="Test 2 ">
+---
+
+**Test #3**
+<img src="testing/screenshots/Test 3 .png" width="500" alt="Test 3"> <img src="testing/screenshots/Question screen .png" width="500" alt="Question Screen">
+--- 
+
+**Test #4**
+<img src="testing/Screenshots/App Launch.png" width="500" alt="Test 4"> <img src="testing/screenshots/Question screen .png" width="500" alt="Question Screen">
+--- 
+
+**Test #5**
+<video controls src="testing/videos/Welcome screen exit button.mov"  width = 600 title="Title"></video>
+---
+
+### Question Screen
+
+**Test #6**
+<img src="testing/screenshots/Question screen .png" width="800" alt="Question Screen">
+---
+
+**Test #7**
+<img src="testing/screenshots/Test 7.png" width="800" alt="Test 7">
+---
+
+**Test #8**
+<img src="testing/screenshots/Test 8.png" width="800" alt="Test 8">
+---
+
+
+
+
+### Feedback Mode - Correct Answer
+
+
+**Test #9**
+<img src="testing/screenshots/Test 9 .png" width="800" alt="Test 9">
+---
+
+
+### Feedback Mode - Incorrect Answer
+
+**Test #10**
+<img src="testing/screenshots/Test 10.png" width="800" alt="Test 10">
+---
+
+**Test #11**
+<video controls src="testing/videos/Test 11 .mov" width = 800 title=""></video>
+---
+
+**Test #12**
+<video controls src="testing/videos/Test 12 .mov" width = 800 title=""></video>
+---
+
+**Test #13**
+<video controls src="testing/videos/Test 13 .mov" width = 800 title=""></video>
+---
+
+### Results Screen
+
+**Test #14**
+<img src="testing/screenshots/Test 14.png" width="800" alt="Test 14">
+---
+
+**Test #15**
+<video controls src="testing/videos/Test 15.mov" width = 850 title="Test 15"></video>
+---
+
+
+
+*Test #14, #15, #16*
+
+### Stored Results Screen
+
+**Test #16**
+<img src="testing/screenshots/Test 16.png" width="600" alt="Test 16">
+---
+
+**Test #17**
+<video controls src="testing/videos/Test 17.mov" width = 600 title="Test 15"></video>
+---
+
+**Test #18**
+<img src="testing/screenshots/Test 18.png" width="600" alt="Test 16">
+---
+
+**Test #19**
+<img src="testing/screenshots/Test 19.png" width="600" alt="Test 16">
+---
+
+**Test #20**
+<img src="testing/screenshots/Test 20.png" width="600" alt="Test 16">
