@@ -1,6 +1,6 @@
 # IBM Code of Conduct & Ethics Quiz
 
----
+
 
 ## Introduction
 
