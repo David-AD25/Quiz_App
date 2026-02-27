@@ -16,9 +16,8 @@ from logic.models import Question, Result
 from logic.quiz import Quiz
 
 
-# ============================================================================
 # VALIDATION FUNCTION TESTS
-# ============================================================================
+
 
 class TestValidateSelectedAnswer:
     """Test cases for validate_selected_answer() function"""
@@ -251,9 +250,9 @@ class TestResult:
         assert result.to_dict()["score"] == 10
 
 
-# ============================================================================
+
 # QUIZ LOGIC TESTS
-# ============================================================================
+
 
 class TestQuiz:
     """Test cases for Quiz class"""
@@ -392,9 +391,9 @@ class TestQuiz:
         assert result.time_taken >= 0
 
 
-# ============================================================================
+
 # INTEGRATION TESTS
-# ============================================================================
+
 
 class TestIntegration:
     """Integration tests combining multiple components"""
