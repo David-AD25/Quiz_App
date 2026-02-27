@@ -209,8 +209,9 @@ The application follows a linear user journey consisting of four primary screens
 --- 
 ### Class Diagram
   - Below is the class diagram : 
+  
+![Class Diagram](Images/Class_Diagram.png)
 
-  ![Class Diagram](Images/Class_Diagram.png)
 
 
 
