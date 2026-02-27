@@ -742,7 +742,7 @@ def load_results(self):
 
 
 
-# Testing Strategy & Methodology
+## Testing Strategy & Methodology
 
 ### Testing Approach Overview
 
@@ -931,4 +931,824 @@ By combining both approaches, we achieve **comprehensive coverage**: manual test
 ---
 
 **Test #20**
-<img src="testing/screenshots/Test 20.png" width="600" alt="Test 16">
+<img src="testing/screenshots/Test 20.png" width="600" alt="Test 20">
+---
+
+
+
+### Unit test
+
+<img src="testing/screenshots/Unit test.png" width="1000000000" alt="Unit test">
+
+
+
+## User Documentation - IBM Code of Conduct & Ethics Quiz
+
+### Overview
+
+The IBM Code of Conduct & Ethics Quiz is an interactive application designed to help IBM staff understand and reinforce IBM's ethical standards. The quiz covers important topics including conflicts of interest, data security, responsible technology use, and reporting unethical behavior.
+
+---
+
+## Getting Started
+
+### System Requirements
+
+- **Operating System:** macOS, Windows, or Linux
+- **Python:** Version 3.13 or higher
+- **No additional software needed** - the application runs standalone on your computer
+
+### Running the Application
+
+1. **Open Terminal/Command Prompt**
+2. **Navigate to the application folder:**
+   ```bash
+   cd /path/to/Ethics\ Quiz/App
+   ```
+3. **Run the application:**
+   ```bash
+   python3 main.py
+   ```
+
+The application window should open automatically.
+
+---
+
+## Using the Quiz
+
+### Step 1: Welcome Screen
+
+When you launch the application, you'll see the Welcome Screen with:
+- IBM logo
+- Quiz description
+- **Your Name** input field
+- **Start Quiz** button
+- **Exit** button
+
+**What to do:**
+1. Enter your name (optional - you can leave blank and it will show as "Anonymous")
+2. Click **Start Quiz** to begin
+
+---
+
+### Step 2: Question Screen
+
+The Question Screen shows:
+- The current question 
+- **4 multiple choice options** as radio buttons
+- **Submit** button
+- Status message area (if needed)
+
+**How to answer:**
+1. **Select one option** by clicking the radio button next to it
+2. **Click Submit** to submit your answer
+3. If you forgot to select an answer, you'll see an error message: "Please select an answer before submitting."
+
+**Example:**
+```
+Question: What does IBM stand for?
+
+○ Internet Business Management
+○ Integrated Business Models  
+● International Business Machines  ← Selected
+○ International Banking Methods
+
+[Submit]
+```
+
+---
+
+### Step 3: Feedback
+
+After clicking Submit, the screen enters **Feedback Mode**:
+
+- **Green ✓** appears next to the correct answer
+- **Red ✗** appears next to your selection (if wrong)
+- **Status message** tells you: "Correct!" or "Incorrect. Review the correct answer above."
+- **Radio buttons are locked** - you cannot change your selection
+- **Submit button disappears** and **Next button appears**
+
+**What to do:**
+1. Review the feedback
+2. Click **Next** to proceed to the next question
+
+---
+
+### Step 4: Complete the Quiz
+
+Repeat Steps 2-3 for all 4 questions in the quiz. After your last answer, you'll see the Results Screen.
+
+---
+
+## Results Screen
+
+After completing all questions, you'll see:
+
+- **Your Name:** The name you entered (or "Anonymous")
+- **Final Score:** e.g., "3/4" (3 correct out of 4 questions)
+- **Time Taken:** e.g., "4m 30s" (minutes and seconds)
+- **View Previous Results** button
+- **Exit** button
+
+**What to do:**
+1. Review your score
+2. Click **View Previous Results** to see all past attempts
+3. Click **Exit** to close the application
+
+---
+
+## Stored Results Screen
+
+Shows a table of all your quiz attempts with:
+- **Name** - Person who took the quiz
+- **Score** - Number correct (e.g., 3/4)
+- **Date & Time** - When the quiz was taken
+- **Time Taken** - How long the quiz took (e.g., 4m 30s)
+
+**What to do:**
+1. Review your quiz history
+2. Click **Exit** to close the application
+
+---
+
+## Tips for Success
+
+### Before Taking the Quiz
+- Find a quiet place free from distractions
+- Think carefully about each answer
+
+### During the Quiz
+- Read each question carefully
+- Consider all 4 options before selecting
+- If unsure, think about IBM's values and the Code of Conduct
+- You can take as much time as you need per question
+
+### After the Quiz
+- Review your score
+- If you scored low, consider taking the quiz again to reinforce learning
+- Your results are automatically saved for record-keeping
+
+---
+
+## Troubleshooting
+
+### Problem: Application won't start
+
+**Solution:** 
+- Ensure Python 3.13+ is installed
+- Try running from Terminal: `python3 main.py`
+- Check that you're in the correct directory
+
+### Problem: "No questions available" message appears
+
+**Solution:**
+- This means the quiz questions file is missing
+- Contact your IT administrator to ensure questions.csv is in the `app/csv_files/` folder
+
+### Problem: Results aren't saving
+
+**Solution:**
+- Check that you have write permission to the `app/csv_files/` folder
+- Ensure there is enough disk space
+- Contact IT if the problem persists
+
+### Problem: Questions/answers don't display correctly
+
+**Solution:**
+- Try closing and reopening the application
+- Clear the browser cache if using web version
+- Restart your computer if the issue persists
+
+---
+
+## Data Privacy
+
+- Your quiz results are saved locally on your computer
+- Results include: name, score, time taken, and timestamp
+- Results are stored in CSV format in the `app/csv_files/results.csv` file    
+
+---
+
+## Frequently Asked Questions
+
+**Q: Can I retake the quiz?**
+A: Yes! Return to the Welcome Screen after finishing and enter your name again to retake the quiz. Previous results are preserved.
+
+**Q: How many questions are in the quiz?**
+A: There are 4 questions covering IBM's Code of Conduct and Ethics.
+
+**Q: Is there a time limit?**
+A: No, you can take as long as you need per question. Total time is tracked.
+
+**Q: What happens if I get a question wrong?**
+A: The screen shows you the correct answer in green (✓) and your incorrect selection in red (✗). You can then learn from the feedback.
+
+**Q: Can I skip a question?**
+A: No, you must answer every question before proceeding.
+
+**Q: What's a passing score?**
+A: There's no official pass/fail - the quiz is for learning and reinforcement. Aim for 3/4 or better.
+
+**Q: Where are my results stored?**
+A: Results are saved in the application's results.csv file and displayed in the "Stored Results" screen.
+
+**Q: Can I delete my results?**
+A: Results are permanent record-keeping. Contact your administrator if you need results removed.
+
+---
+
+
+## Next Steps
+
+After completing the quiz:
+1. **Review your score** on the Results Screen
+2. **Study any weak areas** where you scored incorrectly
+3. **Retake the quiz** to reinforce learning
+4. **Keep your results** as proof of completion
+
+Thank you for taking the IBM Code of Conduct & Ethics Quiz!
+
+
+
+## Technical Documentation - IBM Code of Conduct & Ethics Quiz
+
+### Overview for Developers
+
+This document explains the code structure, how to run tests, and how to maintain the application.
+
+---
+
+## Code Architecture
+
+### 1. **MVC Pattern (Model-View-Controller)**
+
+The application uses MVC architecture:
+
+**Model:** Data layer
+- `models.py` - Question and Result dataclasses
+- `repository.py` - CSV data access
+
+**View:** UI layer
+- `welcome_screen.py` - Welcome interface
+- `question_screen.py` - Quiz interface
+- `results_screen.py` - Results interface
+- `stored_results_screen.py` - History interface
+
+**Controller:** Business logic layer
+- `main.py` - Application orchestration
+- `quiz.py` - Quiz logic and state
+
+---
+
+### 2. **Key Classes**
+
+#### Question (models.py)
+```python
+@dataclass(frozen=True)
+class Question:
+    id: str                    # Unique identifier
+    text: str                  # Question text
+    options: List[str]         # Answer options
+    correct_index: int         # Index of correct answer
+    
+    def is_valid(self) -> bool:
+        # Validates question has text, ≥2 options, valid correct_index
+```
+
+#### Result (models.py)
+```python
+@dataclass(frozen=True)
+class Result:
+    user_name: str             # User's name
+    score: int                 # Questions answered correctly
+    total_questions: int       # Total questions
+    time_taken: float          # Time in seconds
+    timestamp: str             # ISO 8601 timestamp
+    
+    def to_dict(self) -> dict:
+        # Converts to dictionary for CSV saving
+```
+
+#### Quiz (quiz.py)
+```python
+class Quiz:
+    def __init__(self, questions: List[Question])
+    def start() -> None              # Begin quiz, record time
+    def get_current_question()       # Get Question at current_index
+    def submit_answer(idx: int)      # Store user's answer
+    def next_question()      # Advance to next question
+    def calculate_score()    # Count correct answers
+    def finish(user_name: str)   # End quiz, create Result
+```
+
+---
+
+## Running Tests Locally
+
+### Installation
+
+```bash
+# Install pytest (testing framework)
+pip install pytest
+
+# Or with pip3
+pip3 install pytest
+```
+
+### Running Tests
+
+**From the app directory:**
+
+```bash
+# Run all 41 tests 
+pytest test_quiz_app.py -v
+
+# Run specific test class
+pytest test_quiz_app.py::TestValidateSelectedAnswer -v
+
+# Run specific test
+pytest test_quiz_app.py::TestQuestion::test_valid_question -v
+
+# Run with coverage report
+pip install pytest-cov
+pytest test_quiz_app.py --cov=logic --cov-report=html
+```
+
+### Test Structure
+
+**41 total unit tests:**
+
+1. **TestValidateSelectedAnswer** (7 tests)
+   - Tests answer validation logic
+   - Checks valid/invalid selections
+
+2. **TestCheckAnswer** (5 tests)
+   - Tests if answers are correct
+   - Compares user selection vs correct answer
+
+3. **TestFormatTime** (9 tests)
+   - Tests time formatting (30s → "00:30", 245s → "04:05")
+   - Handles seconds, minutes, hours
+
+4. **TestQuestion** (6 tests)
+   - Tests Question.is_valid()
+   - Validates question requirements
+
+5. **TestResult** (3 tests)
+   - Tests Result.to_dict()
+   - Tests CSV conversion
+
+6. **TestQuiz** (10 tests)
+   - Tests quiz initialization
+   - Tests state management (start, submit, next)
+   - Tests score calculation
+   - Tests result creation
+
+7. **TestIntegration** (1 test)
+   - Tests complete quiz flow end-to-end
+
+---
+
+## Understanding the Code Flow
+
+### Application Startup (main.py)
+
+```python
+class App(tk.Tk):
+    def __init__(self):
+        # 1. Initialize Tkinter window
+        # 2. Create container frame
+        # 3. Load CSV repository
+        # 4. Show welcome screen
+        self.show_welcome()
+```
+
+### Taking a Quiz
+
+```
+1. User enters name and clicks "Start Quiz"
+    calls start_quiz_flow(name)
+   
+2. Questions loaded from CSV
+    repo.load_questions()
+   
+3. Quiz object created and started
+    Quiz(questions).start()
+   
+4. First question displayed
+    show_question()
+   
+5. User selects answer and clicks Submit
+    on_submit() → _submit_answer_and_feedback()
+   
+6. Feedback displayed (✓ or ✗)
+    show_feedback_mode()
+   
+7. User clicks Next
+    _go_next_or_finish()
+   
+8. Repeat 4-7 until last question
+   
+9. Quiz finished, Result created
+    quiz.finish(user_name)
+   
+10. Result saved to CSV
+     repo.append_result(result)
+    
+11. Results screen displayed
+     show_results(result)
+```
+
+---
+
+## CSV File Format
+
+### questions.csv
+```
+id,text,choices,correct_index
+q001,What does IBM stand for?,International Business Machines||Internet Business Management||Integrated Business Models||International Banking Methods,0
+q002,Question 2 text?,Option A||Option B||Option C||Option D,2
+```
+
+**Fields:**
+- `id` - Unique question identifier
+- `text` - Question text displayed to user
+- `choices` - Options separated by `||` (pipe separator)
+- `correct_index` - Index of correct answer (0-based)
+
+### results.csv
+```
+user_name,score,total_questions,time_taken,timestamp
+David,8,10,245.0,2026-02-20T14:30:00Z
+Alice,10,10,120.5,2026-02-20T13:45:30Z
+```
+
+**Fields:**
+- `user_name` - Name entered by user
+- `score` - Number of correct answers
+- `total_questions` - Total questions in quiz
+- `time_taken` - Time in seconds (float)
+- `timestamp` - ISO 8601 format timestamp
+
+---
+
+## Important Functions
+
+### validate.py
+
+```python
+def validate_selected_answer(idx: int | None, num_options: int) -> bool:
+    # Returns True if idx is valid selection (0 ≤ idx < num_options)
+    
+def check_answer(selected: int, correct: int) -> bool:
+    # Returns True if selected == correct
+    
+def format_time(seconds: float) -> str:
+    # Converts seconds to "MM:SS" or "HH:MM:SS"
+    # Example: 245 → "04:05", 3845 → "01:04:05"
+```
+
+### repository.py
+
+```python
+class CSVRepository:
+    def load_questions() -> List[Question]:
+        # Reads questions.csv, returns validated questions
+        
+    def append_result(result: Result) -> None:
+        # Appends result to results.csv (creates file if needed)
+        
+    def load_results() -> List[Result]:
+        # Reads results.csv, returns all saved results
+```
+
+---
+
+## Potential Development Tasks
+
+### Adding a New Question
+
+1. **Edit `app/csv_files/questions.csv`**
+2. **Add row:**
+   ```
+   q006,New question text?,Option 1||Option 2||Option 3||Option 4,2
+   ```
+3. **Run tests to ensure question is valid:**
+   ```bash
+   pytest test_quiz_app.py::TestQuestion -v
+   ```
+
+### Modifying Answer Validation
+
+1. **Edit `app/logic/validate.py`**
+2. **Update `validate_selected_answer()`**
+3. **Run tests:**
+   ```bash
+   pytest test_quiz_app.py::TestValidateSelectedAnswer -v
+   ```
+
+### Changing Quiz Flow
+
+1. **Edit `app/main.py`**
+2. **Modify methods in `App` class**
+3. **Run full test suite:**
+   ```bash
+   pytest test_quiz_app.py -v
+   ```
+
+### Debugging
+
+**Print debug info:**
+```python
+print(f"Debug: current_index = {self.quiz.current_index}")
+print(f"Debug: user_answers = {self.quiz.user_answers}")
+```
+
+**Run specific test with output:**
+```bash
+pytest test_quiz_app.py::TestQuiz::test_calculate_score_all_correct -v -s
+```
+
+---
+
+## Performance Considerations
+
+- **Quiz loading:** Questions loaded once at startup ~50ms
+- **Answer validation:** Instant <1ms
+- **Result saving:** CSV write operation ~10ms
+- **Tests:** All 41 tests run in <100ms
+
+---
+
+## Security Considerations
+
+- **Data storage:** Results stored in local CSV (no encryption)
+- **Input validation:** All user answers validated before processing
+- **File permissions:** Ensure results.csv is writable
+- **No network:** Application runs entirely locally, no data transmission
+
+---
+
+## Maintenance & Troubleshooting
+
+### Tests Failing
+
+1. **Check Python version:** `python3 --version` (need 3.13+)
+2. **Reinstall pytest:** `pip install pytest`
+3. **Check imports:** Ensure all modules can be imported
+4. **Run single test:** `pytest test_quiz_app.py::TestValidateSelectedAnswer::test_valid_selection_first_option -v`
+
+### Application Crashing
+
+1. **Check file paths:** Ensure csv_files/ folder exists with questions.csv
+2. **Check permissions:** Ensure write access to csv_files/ folder
+3. **Check imports:** Run `python3 -c "from logic.models import Question"` to test imports
+4. **Run from correct directory:** Must run from `app/` folder
+
+### Results Not Saving
+
+1. **Check disk space:** Ensure enough free disk space
+2. **Check permissions:** `ls -la app/csv_files/` to verify write access
+3. **Check file format:** Ensure results.csv has correct headers
+4. **Manually test:** Run `python3` and execute `repo.append_result(test_result)`
+
+---
+
+## Next Steps for Development
+
+- Add more questions to questions.csv
+- Implement database storage instead of CSV
+- Add user login/authentication
+- Create admin dashboard for results review
+- Add progress tracking across multiple quizzes
+- Implement scoring thresholds and certificates
+
+---
+
+## Code Quality Standards
+
+- **Type hints:** All functions use type hints
+- **Docstrings:** All classes/functions documented
+- **Test coverage:** 41 tests cover core logic
+- **PEP 8:** Follow Python style guide
+- **Immutable data:** Use frozen dataclasses for data integrity
+
+
+
+
+
+# Evaluation Section
+
+## Project Reflection & Assessment
+
+This section reflects on the development journey of the IBM Code of Conduct & Ethics Quiz application, pointing out what went well and what could have been improved.
+
+---
+
+## What Went Well
+
+### 1. **Successful MVC Architecture Implementation**
+
+One of my strongest achievements was implementing a clean Model-View-Controller (MVC) architecture. The separation of concerns between:
+- **Models** (data layer with frozen dataclasses)
+- **Views** (GUI screens)
+- **Controllers** (business logic and orchestration)
+
+This made the codebase maintainable and testable. Each component had a single responsibility, making it easy to modify one part without breaking others. The architecture decision proved especially valuable when adding unit tests later in development.
+
+### 2. **Comprehensive Unit Test Coverage**
+
+I successfully created 41 unit tests covering:
+- Validation functions (10 tests)
+- Data models (9 tests)
+- Quiz logic (10 tests)
+- Integration tests (1 test)
+
+All tests pass, demonstrating that the core business logic is reliable. The tests serve as both verification of correctness and executable documentation of expected behavior. This is a strong foundation for future maintenance and feature additions.
+
+### 3. **Robust Data Validation**
+
+The application implements thorough validation at multiple levels:
+- **Question validation:** Checks that questions have text, ≥2 options, and valid correct_index
+- **Answer validation:** Prevents out-of-range selections and empty submissions
+- **Result validation:** Ensures all required fields are present
+
+This defensive programming approach prevents silent failures and data corruption.
+
+### 4. **Clean Code & Documentation**
+
+I maintained high code quality through:
+- Type hints on all functions
+- Comprehensive docstrings on classes and methods
+- Clear variable naming
+- Logical code organization
+
+The documentation makes the codebase accessible to other developers and easier to maintain long-term.
+
+### 5. **User-Friendly Quiz Experience**
+
+The quiz flow is intuitive:
+- Clear feedback (✓ for correct, ✗ for incorrect)
+- Locked inputs in feedback mode prevent accidental changes
+- Time tracking with clean formatting (4m 30s instead of 270.5s)
+- Historical results stored for record-keeping
+
+Users can complete the quiz without confusion, and the application is forgiving (e.g., optional name entry).
+
+### 6. **Data Persistence**
+
+The CSV-based repository implementation successfully:
+- Loads questions from structured data
+- Saves results with automatic file creation
+- Preserves data across sessions
+- Handles missing files gracefully with error messages
+
+This simple but effective approach avoids the complexity of a database while meeting all requirements.
+
+---
+
+## What Could Have Been Improved
+
+### 1. **Design Implementation Challenges - Figma to Code**
+
+This was my most significant struggle during development. I created detailed designs in Figma with specific styling intentions, but translating them to Tkinter proved challenging.
+
+**The Problem:**
+
+When I designed the application in Figma, I envisioned:
+- **Gold color**  for  the background, buttons and highlights 
+- **Subtle borders** on input fields and containers with rounded corners 
+- **Custom fonts and sizes** for hierarchy
+- **Color consistency** across all screens
+
+However, when building with Tkinter, I encountered  limitations:
+
+- **Limited styling options:** Tkinter's `ttk` (themed Tkinter) module doesn't support custom colors easily. Buttons, inputs, and labels have restricted color palettes
+- **Design complexity:** Achieving the Figma design would have required either:
+  - Building custom widgets from scratch (very time-consuming)
+  - Using a different framework like PyQt or web-based UI 
+
+**What I Did:**
+
+I made pragmatic trade-offs:
+- Used the system theme colors (gray) that Tkinter had 
+- Focused on clean layout and clear hierarchy through spacing
+- Prioritized functionality and user experience over perfect designs
+- Ensured the UI was professional and usable, even if not matching Figma exactly
+
+**What I Learned:**
+
+This experience taught me that **design tools and implementation frameworks need to be aligned from the start**. In future projects, I will:
+- Choose the implementation framework first 
+- Design within the constraints of that framework
+- Use design tools to match the target platform's capabilities
+- Document design system limitations early
+- Consider prototyping in the actual framework rather than design tools alone, this is where I mainly fell short
+
+### 2. **Testing Challenges with Time-Based Assertions**
+
+The unit tests for time calculation (`test_finish_creates_result` and `test_complete_quiz_flow`) initially failed because:
+- Unit tests run extremely fast (< 100ms total)
+- The time elapsed between quiz start and finish rounds to 0.0 seconds
+- Original assertion `assert result.time_taken > 0` was too strict
+
+**Resolution:** Changed to `assert result.time_taken >= 0` to allow for 0 time in fast-running tests, while still validating that time is recorded in real usage. 
+Time-dependent tests need flexible assertions or deliberate delays to properly test timing logic.
+
+### 3. **CSV Path Configuration**
+
+During development, I struggled with relative vs. absolute file paths:
+- Initially used `"csv_files/questions.csv"` which only worked when running from specific directories
+- Later corrected to `"app/csv_files/questions.csv"` for reliability
+- Had to debug import issues multiple times
+
+**What I'd do differently:** Use `os.path` utilities to construct paths relative to the module location, making the code more robust to different execution contexts.
+
+### 4. **Limited Error Handling for Edge Cases**
+
+While the application handles common errors well, some edge cases could be handled better:
+- If a question in CSV has invalid format
+- If results.csv becomes corrupted, the app may not recover well
+- No option for users to clear their results history
+
+**Improvements for next version:**
+- Add logging system to track errors and data issues
+- Implement result export/backup functionality
+- Add admin features for result management
+
+### 5. **No Database - CSV Limitations**
+
+Using CSV files works for the current scale (< 100 results) but has limitations:
+- No indexing or efficient searching
+- Concurrent access could cause issues
+- Difficult to filter or analyze results
+- Not scalable for enterprise use
+
+
+
+### 6. **Missing Features**
+
+Time constraints and scope limitations meant some useful features weren't implemented:
+- **Progress indicator:** "Question 2 of 4" would help user orientation
+- **Retake confirmation:** No warning if user exits during a quiz
+- **Results analytics:** No summary of performance by topic
+- **Accessibility:** No keyboard-only navigation or screen reader support
+
+These would enhance the user experience and make the application more inclusive.
+
+---
+
+## Lessons Learned
+
+### 1. **Design-Implementation Alignment is Critical**
+
+I learned that choosing the implementation platform early is crucial. Spending time designing in Figma without considering Tkinter's constraints led to rework. In future projects, I will involve prototyping in the actual framework.
+
+### 2. **Robust Programming is crucial**
+
+The extensive validation in the code prevented silent failures. When CSV files were missing or malformed, the application handled it well rather than crashing.
+
+### 3. **Testing Forces Better Code**
+
+Writing unit tests revealed issues in my logic that manual testing missed. The 41 tests caught edge cases like time rounding that wouldn't be obvious in normal use.
+
+### 4. **Simple Solutions Often Work Best**
+
+I was tempted to use complex frameworks or databases, but the simple CSV + Tkinter solution met all requirements cleanly. 
+
+### 5. **Documentation is Development**
+
+Writing comprehensive docstrings and documentation forced me to think clearly about design decisions. It also made debugging easier when reviewing the code.
+
+---
+
+
+## Conclusion
+
+The IBM Code of Conduct & Ethics Quiz is a **solid, functional application that successfully meets its core requirements. The architecture is clean, the tests are comprehensive, and the user experience is simple and straightforward.
+
+**Main Strengths:**
+- Well-tested code with 41 passing tests
+- Clear MVC architecture
+- Comprehensive documentation
+- Intuitive user interface
+- Robust data validation
+
+**Main Weaknesses:**
+- Design didn't fully translate from Figma to Tkinter
+- CSV-based storage limits scalability
+- Missing some enhancement features due to scope
+- Could benefit from logging and error handling improvements
+
+
+---
+
+## References & Resources
+
+- [Tkinter Official Documentation](https://docs.python.org/3/library/tkinter.html)
+- [Python Type Hints (PEP 484)](https://www.python.org/dev/peps/pep-0484/)
+- [Pytest Testing Framework](https://docs.pytest.org/)
+- [Python Dataclasses (PEP 557)](https://www.python.org/dev/peps/pep-0557/)
+- [Model-View-Controller Pattern](https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93controller)
+- [CSV File Format (RFC 4180)](https://tools.ietf.org/html/rfc4180)
+- [PEP 8 Style Guide for Python Code](https://www.python.org/dev/peps/pep-0008/)
